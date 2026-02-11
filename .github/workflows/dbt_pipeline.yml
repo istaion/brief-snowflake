@@ -1,0 +1,47 @@
+name: dbt NYC Taxi Pipeline
+
+on:
+  schedule:
+    # Chaque 1er du mois à 6h UTC
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+    # Déclenchement manuel depuis l'interface GitHub
+
+env:
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+  SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+
+jobs:
+  dbt-run:
+    name: Run dbt pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dbt-snowflake
+        run: pip install dbt-snowflake
+
+      - name: Verify connection
+        working-directory: nyc_taxi_dbt
+        run: dbt debug
+
+      - name: Run models
+        working-directory: nyc_taxi_dbt
+        run: dbt run
+
+      - name: Run tests
+        working-directory: nyc_taxi_dbt
+        run: dbt test
+
+      - name: Generate docs
+        working-directory: nyc_taxi_dbt
+        run: dbt docs generate
