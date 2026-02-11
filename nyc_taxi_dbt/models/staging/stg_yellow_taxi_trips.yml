@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_yellow_taxi_trips
+    description: "Trajets NYC Yellow Taxi nettoyés — montants positifs, distances et durées valides, zones non nulles"
+    columns:
+      - name: PULocationID
+        description: "Zone de prise en charge"
+        tests:
+          - not_null
+      - name: DOLocationID
+        description: "Zone de dépose"
+        tests:
+          - not_null
+      - name: fare_amount
+        description: "Montant de la course"
+        tests:
+          - not_null
+      - name: trip_distance
+        description: "Distance du trajet en miles"
+        tests:
+          - not_null
+      - name: tpep_pickup_datetime
+        description: "Date/heure de prise en charge"
+        tests:
+          - not_null
+      - name: tpep_dropoff_datetime
+        description: "Date/heure de dépose"
+        tests:
+          - not_null
+      - name: VendorID
+        description: "Identifiant du fournisseur"
+        tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2, 6, 7]

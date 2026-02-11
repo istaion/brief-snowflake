@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: daily_summary
+    description: "Résumé quotidien : volume de trajets, distances, revenus et métriques opérationnelles par jour"
+    columns:
+      - name: trip_date
+        description: "Date du jour"
+        tests:
+          - not_null
+          - unique
+      - name: total_trips
+        description: "Nombre total de trajets"
+        tests:
+          - not_null
+
+  - name: zone_analysis
+    description: "Analyse par zone de départ : volume, revenus, distribution temporelle et destination principale"
+    columns:
+      - name: pickup_zone
+        description: "Identifiant de la zone de prise en charge"
+        tests:
+          - not_null
+          - unique
+
+  - name: hourly_patterns
+    description: "Patterns horaires par heure, période et type de jour"
+    columns:
+      - name: pickup_hour
+        description: "Heure de prise en charge (0-23)"
+        tests:
+          - not_null

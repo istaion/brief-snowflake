@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: int_trip_metrics
+    description: "Trajets enrichis avec durée, dimensions temporelles, catégories de distance et métriques calculées"
+    columns:
+      - name: trip_duration_minutes
+        description: "Durée du trajet en minutes"
+        tests:
+          - not_null
+      - name: day_type
+        description: "Weekday ou Weekend"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Weekday', 'Weekend']
+      - name: time_period
+        description: "Période de la journée"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Rush Matinal', 'Journée', 'Rush Soir', 'Soirée', 'Nuit']
+      - name: distance_category
+        description: "Catégorie de distance"
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Court (≤1 mile)', 'Moyen (1-5 miles)', 'Long (5-10 miles)', 'Très long (>10 miles)']

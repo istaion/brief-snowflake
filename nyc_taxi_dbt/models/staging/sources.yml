@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: NYC_TAXI_DB
+    schema: RAW
+    tables:
+      - name: yellow_taxi_trips_clean
+        description: "Données brutes NYC Yellow Taxi avec timestamps convertis"
